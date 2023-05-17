@@ -16,58 +16,68 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<NotesProvider>(context, listen: false);
 
-    return Card(
-      elevation: 10,
-      margin: EdgeInsets.all(8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            title: Text(
-              notesModel.title,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              notesModel.description,
-              style: TextStyle(fontWeight: FontWeight.w400),
-            ),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ViewNote(notesModel: notesModel),
           ),
-          Divider(height: 1),
-          ListTile(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ViewNote(notesModel: notesModel),
-                  ),
-                );
-              },
-              icon: Icon(Icons.remove_red_eye),
+        );
+      },
+      child: Card(
+        color: Colors.white,
+        elevation: 10,
+        margin: EdgeInsets.all(8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                notesModel.title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                notesModel.description,
+                style: TextStyle(fontWeight: FontWeight.w400),
+              ),
             ),
-            title: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => EditNote(
-                      notesModel: notesModel,
+            Divider(height: 1),
+            ListTile(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ViewNote(notesModel: notesModel),
                     ),
-                  ),
-                );
-              },
-              icon: Icon(Icons.edit),
-            ),
-            trailing: IconButton(
-              onPressed: () {
-                // int index = provider.notesData
-                //     .indexWhere((element) => element.id == notesModel.id);
-                provider.removeModel(notesModel);
-              },
-              icon: Icon(Icons.delete),
-            ),
-          )
-        ],
+                  );
+                },
+                icon: Icon(Icons.remove_red_eye),
+              ),
+              title: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditNote(
+                        notesModel: notesModel,
+                      ),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.edit),
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  // int index = provider.notesData
+                  //     .indexWhere((element) => element.id == notesModel.id);
+                  provider.removeModel(notesModel);
+                },
+                icon: Icon(Icons.delete),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
